@@ -20,6 +20,8 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
       <main className={styles.main}>
         <CardList headline="Accommodations" list={placeList} />
         <CardList headline="Flights" list={flightList} />
+        {/* TODO we need a fallback when there are no flights or places */}
+        {/* TODO we need a way to tell the user that an error occured */}
       </main>
 
       <footer className={styles.footer}></footer>
@@ -64,10 +66,11 @@ export const getServerSideProps: GetServerSideProps<SimpleBookingDashboardProps>
      
      if (response.status === 200) {
         const json = await response.json();
-        placeList = json.data.placeList;
-        flightList = json.data.flightList;
+        placeList = json.data?.placeList || [];
+        flightList = json.data?.flightList || [];
      }
   } catch (err) {
+    // TODO error handling needs improvement. The user needs to know that something went wrong
      console.error(err);
   }
 

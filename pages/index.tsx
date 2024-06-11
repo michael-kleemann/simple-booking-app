@@ -5,9 +5,10 @@ import Head from 'next/head';
 import styles from '@/styles/Home.module.css';
 import { SimpleBookingDashboardProps } from '@/interfaces/interfaces';
 import { Place } from "@/graphql/generated/schemaType";
+import { PlaceCardList } from '@/src/PlaceCardList';
 
 const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({placeList}) => {
-  console.log(placeList);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -17,9 +18,7 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
       </Head>
 
       <main className={styles.main}>
-        <div>
-        {placeList.map((place) => <div>{`${place.id} ${place.desciption}`}</div>)}
-        </div>
+        <PlaceCardList placeList={placeList} />
       </main>
 
       <footer className={styles.footer}></footer>
@@ -32,6 +31,9 @@ query GetPlaceList {
   placeList {
     id
     desciption
+    mainPhoto
+    photos
+    priceByNight
   }
 } 
 `;

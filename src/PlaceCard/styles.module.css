@@ -1,0 +1,22 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: solid 1px grey;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.card:hover {
+    cursor: pointer;
+    box-shadow: 3px 3px 3px grey;
+}
+
+.description {
+    font-size: 18px;
+    min-height: 48px;
+}
+
+.image {
+    border-radius: 8px;
+}

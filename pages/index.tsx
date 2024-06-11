@@ -27,6 +27,7 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
   );
 };
 
+// TODO might be better to move this into a separate file when more queries will be needed.
 const QUERY: string = `
 query GetPlaceAndFlightList {
   placeList {
@@ -52,6 +53,7 @@ export const getServerSideProps: GetServerSideProps<SimpleBookingDashboardProps>
   let placeList: Place[] = [];
   let flightList: Flight[] = [];
   try {
+    // TODO fetching data should be improved. Better switch to a library like apollo.
      const response = await fetch("http://localhost:3000/api/graphql", {
       method: "POST",
       body: JSON.stringify({

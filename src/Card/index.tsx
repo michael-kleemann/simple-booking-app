@@ -1,5 +1,3 @@
-import { Place } from "@/graphql/generated/schemaType";
-import Image from 'next/image';
 import styles from './styles.module.css';
 
 interface Props {

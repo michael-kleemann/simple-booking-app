@@ -1,4 +1,4 @@
-import { Flight, Place } from "@/graphql/generated/schemaType";
+import { Flight } from "@/graphql/generated/schemaType";
 import styles from './styles.module.css';
 
 interface Props {

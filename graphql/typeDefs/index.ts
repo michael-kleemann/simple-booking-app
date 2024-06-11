@@ -1,4 +1,26 @@
-export default `type Place {
+export default `type Flight {
+  id: ID
+  origin: String
+  destination: String
+  price: Float
+}
+
+input inputFlightType {
+  type: String
+  origin: String
+  destination: String
+  price: Float
+}
+
+type Mutation {
+  addFlight(body: inputFlightType): Flight
+}
+
+type Query {
+  flightList: [Flight]
+  flight(id: ID): Flight
+}
+ type Place {
   id: ID
   owner: User
   desciption: String

@@ -4,10 +4,10 @@ import Head from 'next/head';
 
 import styles from '@/styles/Home.module.css';
 import { SimpleBookingDashboardProps } from '@/interfaces/interfaces';
-import { Place } from "@/graphql/generated/schemaType";
+import { Flight, Place } from "@/graphql/generated/schemaType";
 import { CardList } from '@/src/CardList';
 
-const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({placeList}) => {
+const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({placeList, flightList}) => {
 
   return (
     <div className={styles.container}>
@@ -19,6 +19,7 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 
       <main className={styles.main}>
         <CardList headline="Accommodations" list={placeList} />
+        <CardList headline="Flights" list={flightList} />
       </main>
 
       <footer className={styles.footer}></footer>
@@ -27,7 +28,7 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 };
 
 const QUERY: string = `
-query GetPlaceList {
+query GetPlaceAndFlightList {
   placeList {
     __typename
     id
@@ -36,12 +37,20 @@ query GetPlaceList {
     photos
     priceByNight
   }
+  flightList {
+    __typename
+    id
+    origin
+    destination
+    price
+  }
 } 
 `;
 
 export const getServerSideProps: GetServerSideProps<SimpleBookingDashboardProps> = async () => {
 
   let placeList: Place[] = [];
+  let flightList: Flight[] = [];
   try {
      const response = await fetch("http://localhost:3000/api/graphql", {
       method: "POST",
@@ -54,6 +63,7 @@ export const getServerSideProps: GetServerSideProps<SimpleBookingDashboardProps>
      if (response.status === 200) {
         const json = await response.json();
         placeList = json.data.placeList;
+        flightList = json.data.flightList;
      }
   } catch (err) {
      console.error(err);
@@ -61,7 +71,8 @@ export const getServerSideProps: GetServerSideProps<SimpleBookingDashboardProps>
 
   return {
     props: {
-      placeList
+      placeList,
+      flightList
     }
   };
 };

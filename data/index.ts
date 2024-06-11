@@ -81,3 +81,24 @@ export const places = [
     reviews,
   },
 ];
+
+export const flights = [
+  {
+    id: '1',
+    origin: 'FRA',
+    destination: 'LHR',
+    price: 188
+  },
+  {
+    id: '2',
+    origin: 'DUS',
+    destination: 'LHR',
+    price: 203
+  },
+  {
+    id: '3',
+    origin: 'MUC',
+    destination: 'LHR',
+    price: 255
+  },
+];

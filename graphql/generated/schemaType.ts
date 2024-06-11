@@ -12,11 +12,25 @@ export type Scalars = {
   Float: number;
 };
 
+export type Flight = {
+  __typename?: 'Flight';
+  destination?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  origin?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  addFlight?: Maybe<Flight>;
   addPlace?: Maybe<Place>;
   addReview?: Maybe<Review>;
   addUser: User;
+};
+
+
+export type MutationAddFlightArgs = {
+  body?: InputMaybe<InputFlightType>;
 };
 
 
@@ -47,11 +61,18 @@ export type Place = {
 
 export type Query = {
   __typename?: 'Query';
+  flight?: Maybe<Flight>;
+  flightList?: Maybe<Array<Maybe<Flight>>>;
   place?: Maybe<Place>;
   placeList?: Maybe<Array<Maybe<Place>>>;
   reviewByUser?: Maybe<Array<Maybe<Review>>>;
   user: User;
   userList: Array<User>;
+};
+
+
+export type QueryFlightArgs = {
+  id?: InputMaybe<Scalars['ID']>;
 };
 
 
@@ -84,6 +105,13 @@ export type User = {
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   photo: Scalars['String'];
+};
+
+export type InputFlightType = {
+  destination?: InputMaybe<Scalars['String']>;
+  origin?: InputMaybe<Scalars['String']>;
+  price?: InputMaybe<Scalars['Float']>;
+  type?: InputMaybe<Scalars['String']>;
 };
 
 export type InputPlaceType = {

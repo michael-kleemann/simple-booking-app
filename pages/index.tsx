@@ -1,10 +1,13 @@
-import type { NextPage } from 'next';
+import type { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next';
 
 import Head from 'next/head';
 
 import styles from '@/styles/Home.module.css';
+import { SimpleBookingDashboardProps } from '@/interfaces/interfaces';
+import { Place } from "@/graphql/generated/schemaType";
 
-const Home: NextPage = () => {
+const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({placeList}) => {
+  console.log(placeList);
   return (
     <div className={styles.container}>
       <Head>
@@ -13,11 +16,51 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>Hola</main>
+      <main className={styles.main}>
+        <div>
+        {placeList.map((place) => <div>{`${place.id} ${place.desciption}`}</div>)}
+        </div>
+      </main>
 
       <footer className={styles.footer}></footer>
     </div>
   );
+};
+
+const QUERY: string = `
+query GetPlaceList {
+  placeList {
+    id
+    desciption
+  }
+} 
+`;
+
+export const getServerSideProps: GetServerSideProps<SimpleBookingDashboardProps> = async () => {
+
+  let placeList: Place[] = [];
+  try {
+     const response = await fetch("http://localhost:3000/api/graphql", {
+      method: "POST",
+      body: JSON.stringify({
+        query: QUERY
+      }),
+      headers: {"content-type": "application/json"}
+     });
+     
+     if (response.status === 200) {
+        const json = await response.json();
+        placeList = json.data.placeList;
+     }
+  } catch (err) {
+     console.error(err);
+  }
+
+  return {
+    props: {
+      placeList
+    }
+  };
 };
 
 export default Home;

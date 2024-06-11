@@ -1,0 +1,15 @@
+.cardList {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    @media screen and (min-width: 800px) {
+        flex-direction: row;
+    }
+}
+
+.headline {
+    font-size: 24px;
+    padding-bottom: 16px;
+    text-align: left;
+}

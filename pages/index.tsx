@@ -5,7 +5,7 @@ import Head from 'next/head';
 import styles from '@/styles/Home.module.css';
 import { SimpleBookingDashboardProps } from '@/interfaces/interfaces';
 import { Place } from "@/graphql/generated/schemaType";
-import { PlaceCardList } from '@/src/PlaceCardList';
+import { CardList } from '@/src/CardList';
 
 const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({placeList}) => {
 
@@ -18,7 +18,7 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
       </Head>
 
       <main className={styles.main}>
-        <PlaceCardList placeList={placeList} />
+        <CardList headline="Accommodations" list={placeList} />
       </main>
 
       <footer className={styles.footer}></footer>
@@ -29,6 +29,7 @@ const Home: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 const QUERY: string = `
 query GetPlaceList {
   placeList {
+    __typename
     id
     desciption
     mainPhoto
